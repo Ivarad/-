@@ -1,0 +1,599 @@
+@startuml
+set namespaceSeparator ::
+
+class "pppd_project::helpers::authorizated.dart::Authorizated" {
+  {static} +String authKey
+  +dynamic setAuthorizated()
+  +Future<List<String>> getAuthorizated()
+  +dynamic deleteKeys()
+}
+
+class "pppd_project::helpers::excel_create.dart::ExcelCreate" {
+  {static} +Future<File> generateExcelData()
+  {static} +Future<File> saveDocument()
+  {static} +Future<dynamic> openFile()
+}
+
+class "pppd_project::helpers::NetworkServices.dart::NetworkServices" {
+  +Dio dio
+  +String baseUrl
+  +Future<String> changePasswordCodeSend()
+  +Future<List<UserData>> getUsers()
+  +Future<UserData?> editUser()
+  +Future<UserData?> createUser()
+  +Future<MedicalCardData?> createMedicalCard()
+  +Future<List<MedicalCardData>> getMedicalCard()
+  +Future<PatientData?> createPatient()
+  +Future<List<PatientData>> getPatient()
+  +Future<List<AppealData>> getAppeals()
+  +Future<AppealData?> createAppeal()
+  +Future<DateFirstAppealData?> createDateFirstRendering()
+  +Future<AppealData?> editAppeal()
+  +Future<dynamic> deleteAppeals()
+  +Future<dynamic> clearAssistance()
+  +Future<List<ProvidedAssistanceData>> getProvidedAssistance()
+  +Future<ProvidedAssistanceData?> createAssistance()
+  +Future<List<ServiceData>> getServices()
+  +Future<List<MedicalSpecialityData>> getAllInfoDocotor()
+  +Future<List<ScheduleData>> getDocotorSchedule()
+  +Future<List<DateFirstAppealData>> getDateFirstAppeal()
+  +Future<List<PatientData>> getPatients()
+  +Future<List<TypeOfMedicalCareData>> getMedicalCares()
+}
+
+"pppd_project::helpers::NetworkServices.dart::NetworkServices" o-- "dio::src::dio.dart::Dio"
+
+class "pppd_project::helpers::pdf_create.dart::PDFCreate" {
+  {static} +Future<File> generateCenteredText()
+  {static} +Future<File> saveDocument()
+  {static} +Future<dynamic> openFile()
+}
+
+class "pppd_project::helpers::theme_preference.dart::ThemePreferences" {
+  {static} +String PREF_KEY
+  +dynamic setTheme()
+  +dynamic getTheme()
+}
+
+class "pppd_project::main.dart::Application" {
+  +String check
+  +dynamic checkData()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "pppd_project::main.dart::Application"
+
+class "pppd_project::models::appeals_data.dart::AppealData" {
+  +int? id
+  +int? dateFirstRenderedId
+  +int? scheduleId
+  +int? patientId
+  +int? employeeId
+  +int? bugetTypeId
+  +String? dateOfRendering
+  +String? complaints
+  +String? inspection
+  +String? diagnosis
+  +String? recommendations
+  +bool? closed
+  +DateFirstAppealData? dateFirstAppealData
+  +PatientData? patientData
+  +EmployeeData? employeeData
+  +ScheduleData? scheduleData
+  +BudgetTypeData? budgetTypeData
+  +MedicalSpecialityData? medicalSpecialityData
+  +MedicalCardData? medicalCardData
+  +CabinetData? cabinetData
+  +Map<String, dynamic> toJson()
+}
+
+"pppd_project::models::appeals_data.dart::AppealData" o-- "pppd_project::models::dates_first_appeal_data.dart::DateFirstAppealData"
+"pppd_project::models::appeals_data.dart::AppealData" o-- "pppd_project::models::patient_data.dart::PatientData"
+"pppd_project::models::appeals_data.dart::AppealData" o-- "pppd_project::models::employee_data.dart::EmployeeData"
+"pppd_project::models::appeals_data.dart::AppealData" o-- "pppd_project::models::schedule_data.dart::ScheduleData"
+"pppd_project::models::appeals_data.dart::AppealData" o-- "pppd_project::models::budget_types_data.dart::BudgetTypeData"
+"pppd_project::models::appeals_data.dart::AppealData" o-- "pppd_project::models::medical_speciality_data.dart::MedicalSpecialityData"
+"pppd_project::models::appeals_data.dart::AppealData" o-- "pppd_project::models::medical_card_data.dart::MedicalCardData"
+"pppd_project::models::appeals_data.dart::AppealData" o-- "pppd_project::models::cabinets_data.dart::CabinetData"
+
+class "pppd_project::models::budget_types_data.dart::BudgetTypeData" {
+  +int? id
+  +String? budgetType
+  +Map<String, dynamic> toJson()
+}
+
+class "pppd_project::models::cabinets_data.dart::CabinetData" {
+  +int? id
+  +int? employeeId
+  +Map<String, dynamic> toJson()
+}
+
+class "pppd_project::models::dates_first_appeal_data.dart::DateFirstAppealData" {
+  +int? id
+  +String? dateFirstAppeal
+  +Map<String, dynamic> toJson()
+}
+
+class "pppd_project::models::doctor_schedule_data.dart::DoctorScheduleData" {
+  +int? scheduleId
+  +int? specialityId
+  +Map<String, dynamic> toJson()
+}
+
+class "pppd_project::models::employee_data.dart::EmployeeData" {
+  +int? id
+  +int? postId
+  +int? accountId
+  +String? name
+  +String? surname
+  +String? patronymic
+  +String? dateOfBirth
+  +Map<String, dynamic> toJson()
+}
+
+class "pppd_project::models::gender_data.dart::GenderData" {
+  +int? id
+  +String? gender
+}
+
+class "pppd_project::models::incomes_and_expenses_data.dart::IncomesAndExpensesData" {
+  +int? id
+  +String? income
+  +String? expenses
+}
+
+class "pppd_project::models::medical_card_data.dart::MedicalCardData" {
+  +int? id
+  +String? dateOfCompletion
+  +String? dateOfBirth
+  +String? name
+  +String? surname
+  +String? patronymic
+  +int? genderId
+  +int? chiPolicy
+  +int? snils
+  +Map<String, dynamic> toJson()
+}
+
+class "pppd_project::models::medical_speciality_data.dart::MedicalSpecialityData" {
+  +int? specialityId
+  +int? employeeId
+  +String? speciality
+  +EmployeeData? employeeData
+  +CabinetData? cabinetData
+  +List<DoctorScheduleData>? doctorScheduleData
+  +Map<String, dynamic> toJson()
+}
+
+"pppd_project::models::medical_speciality_data.dart::MedicalSpecialityData" o-- "pppd_project::models::employee_data.dart::EmployeeData"
+"pppd_project::models::medical_speciality_data.dart::MedicalSpecialityData" o-- "pppd_project::models::cabinets_data.dart::CabinetData"
+
+class "pppd_project::models::patients.dart::Patients" {
+  +int id
+  +String fullName
+  +String dateOfFirstAppeal
+  +String dateAndTimeAppeal
+  {static} +List<Patients> patients()
+}
+
+class "pppd_project::models::patient_data.dart::PatientData" {
+  +int? id
+  +int? accountId
+  +int? medicalCardId
+  +MedicalCardData? medicalCardData
+  +Map<String, dynamic> toJson()
+}
+
+"pppd_project::models::patient_data.dart::PatientData" o-- "pppd_project::models::medical_card_data.dart::MedicalCardData"
+
+class "pppd_project::models::price_data.dart::PriceData" {
+  +int? id
+  +String? price
+}
+
+class "pppd_project::models::provided_assistance_data.dart::ProvidedAssistanceData" {
+  +int? typeOfMedicalCareId
+  +int? servicesRenderedId
+  +AppealData? appealData
+  +TypeOfMedicalCareData? typeOfMedicalCareData
+  +ServiceData? serviceData
+  +PriceData? priceData
+  +IncomesAndExpensesData? incomesAndExpensesData
+  +MedicalSpecialityData? medicalSpecialityData
+  +Map<String, dynamic> toJson()
+}
+
+"pppd_project::models::provided_assistance_data.dart::ProvidedAssistanceData" o-- "pppd_project::models::appeals_data.dart::AppealData"
+"pppd_project::models::provided_assistance_data.dart::ProvidedAssistanceData" o-- "pppd_project::models::type_of_medical_care_data.dart::TypeOfMedicalCareData"
+"pppd_project::models::provided_assistance_data.dart::ProvidedAssistanceData" o-- "pppd_project::models::service_data.dart::ServiceData"
+"pppd_project::models::provided_assistance_data.dart::ProvidedAssistanceData" o-- "pppd_project::models::price_data.dart::PriceData"
+"pppd_project::models::provided_assistance_data.dart::ProvidedAssistanceData" o-- "pppd_project::models::incomes_and_expenses_data.dart::IncomesAndExpensesData"
+"pppd_project::models::provided_assistance_data.dart::ProvidedAssistanceData" o-- "pppd_project::models::medical_speciality_data.dart::MedicalSpecialityData"
+
+class "pppd_project::models::schedule_data.dart::ScheduleData" {
+  +int? id
+  +String? time
+  +List<DoctorScheduleData>? doctorScheduleData
+  +Map<String, dynamic> toJson()
+}
+
+class "pppd_project::models::services.dart::Services" {
+  +int id
+  +String service
+  +int count
+  {static} +List<Services> services()
+}
+
+class "pppd_project::models::service_data.dart::ServiceData" {
+  +int? id
+  +String? service
+  +int? priceId
+  +int? costsAndExpensesId
+  +PriceData? priceData
+  +IncomesAndExpensesData? incomesAndExpensesData
+}
+
+"pppd_project::models::service_data.dart::ServiceData" o-- "pppd_project::models::price_data.dart::PriceData"
+"pppd_project::models::service_data.dart::ServiceData" o-- "pppd_project::models::incomes_and_expenses_data.dart::IncomesAndExpensesData"
+
+class "pppd_project::models::theme_model.dart::ThemeModel" {
+  -bool _isDark
+  -ThemePreferences _preferences
+  +bool isDark
+  +dynamic getPreferences()
+}
+
+"pppd_project::models::theme_model.dart::ThemeModel" o-- "pppd_project::helpers::theme_preference.dart::ThemePreferences"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "pppd_project::models::theme_model.dart::ThemeModel"
+
+class "pppd_project::models::type_of_medical_care_data.dart::TypeOfMedicalCareData" {
+  +int? id
+  +String? typeOfMedicalCare
+  +int? serviceId
+  +int? specialtyId
+  +ServiceData? serviceData
+  +PriceData? priceData
+  +IncomesAndExpensesData? incomesAndExpensesData
+  +MedicalSpecialityData? medicalSpecialityData
+}
+
+"pppd_project::models::type_of_medical_care_data.dart::TypeOfMedicalCareData" o-- "pppd_project::models::service_data.dart::ServiceData"
+"pppd_project::models::type_of_medical_care_data.dart::TypeOfMedicalCareData" o-- "pppd_project::models::price_data.dart::PriceData"
+"pppd_project::models::type_of_medical_care_data.dart::TypeOfMedicalCareData" o-- "pppd_project::models::incomes_and_expenses_data.dart::IncomesAndExpensesData"
+"pppd_project::models::type_of_medical_care_data.dart::TypeOfMedicalCareData" o-- "pppd_project::models::medical_speciality_data.dart::MedicalSpecialityData"
+
+class "pppd_project::models::user_data.dart::UserData" {
+  +int? id
+  +String? login
+  +String? password
+  +String? email
+  +int? roleId
+  +Map<String, dynamic> toJson()
+}
+
+class "pppd_project::presentation::analyst_personal_area.dart::PersonalAreaAnalyst" {
+  +State<PersonalAreaAnalyst> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "pppd_project::presentation::analyst_personal_area.dart::PersonalAreaAnalyst"
+
+class "pppd_project::presentation::analyst_personal_area.dart::_PersonalAreaAnalystState" {
+  +List<ProvidedAssistanceData> listProvided
+  +List<ProvidedAssistanceData> filteredListProvided
+  +List<TypeOfMedicalCareData> filteredListCares
+  +List<TypeOfMedicalCareData> listCares
+  -String? _documentName
+  -GlobalKey<FormState> _formKey
+  +Map<String, double> dataMap
+  +List<String> filter
+  +String? dropdownValue
+  -bool _isServicesLoading
+  +DateTimeRange dateRange
+  -DateTime _startDate
+  -DateTime _endDate
+  +void initState()
+  +Future<dynamic> pickDateRange()
+  +dynamic filterServices()
+  +dynamic selectedDate()
+  +Future<dynamic> getServicesAndAssiatance()
+  +dynamic showAlertDialog()
+  +dynamic message()
+  +Widget build()
+}
+
+"pppd_project::presentation::analyst_personal_area.dart::_PersonalAreaAnalystState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"pppd_project::presentation::analyst_personal_area.dart::_PersonalAreaAnalystState" o-- "flutter::src::material::date.dart::DateTimeRange"
+"flutter::src::widgets::framework.dart::State" <|-- "pppd_project::presentation::analyst_personal_area.dart::_PersonalAreaAnalystState"
+
+class "pppd_project::presentation::app_info.dart::AppInfo" {
+  +State<AppInfo> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "pppd_project::presentation::app_info.dart::AppInfo"
+
+class "pppd_project::presentation::app_info.dart::_AppInfoState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "pppd_project::presentation::app_info.dart::_AppInfoState"
+
+class "pppd_project::presentation::change_password.dart::ChangePassword" {
+  +bool authorizated
+  {static} +void restartApp()
+  +State<ChangePassword> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "pppd_project::presentation::change_password.dart::ChangePassword"
+
+class "pppd_project::presentation::change_password.dart::_ChangePasswordState" {
+  +Key key
+  -String? _checkCode
+  -String? _newPassword
+  -String? _rePassword
+  -String? _emailOrLogin
+  -GlobalKey<FormState> _formKey
+  -bool _validatation
+  -bool _codeSended
+  -bool _checkAccount
+  -bool _isLoad
+  -String? _code
+  -NetworkServices? _networkServices
+  +List<UserData> usersList
+  +List<String> listdata
+  -bool _isObscure
+  -bool _isReObscure
+  +void restartApp()
+  +void initState()
+  -Future<dynamic>? _isCodeSended()
+  +Future<dynamic> changePassword()
+  +Future<bool> checkAccount()
+  +dynamic message()
+  +Widget build()
+}
+
+"pppd_project::presentation::change_password.dart::_ChangePasswordState" o-- "flutter::src::foundation::key.dart::Key"
+"pppd_project::presentation::change_password.dart::_ChangePasswordState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"pppd_project::presentation::change_password.dart::_ChangePasswordState" o-- "pppd_project::helpers::NetworkServices.dart::NetworkServices"
+"flutter::src::widgets::framework.dart::State" <|-- "pppd_project::presentation::change_password.dart::_ChangePasswordState"
+"flutter::src::widgets::ticker_provider.dart::TickerProviderStateMixin" <|-- "pppd_project::presentation::change_password.dart::_ChangePasswordState"
+
+class "pppd_project::presentation::doctor_personal_area.dart::PersonalAreaDoctor" {
+  +State<PersonalAreaDoctor> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "pppd_project::presentation::doctor_personal_area.dart::PersonalAreaDoctor"
+
+class "pppd_project::presentation::doctor_personal_area.dart::_PersonalAreaDoctorState" {
+  +List<String> filter
+  +String? dropdownValue
+  +List<AppealData> appeals
+  +List<AppealData> appealsSelected
+  -bool _isPatientLoading
+  +void initState()
+  +Future<dynamic> getAppeals()
+  +dynamic filterPatients()
+  +dynamic message()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "pppd_project::presentation::doctor_personal_area.dart::_PersonalAreaDoctorState"
+
+class "pppd_project::presentation::home.dart::Home" {
+  +State<Home> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "pppd_project::presentation::home.dart::Home"
+
+class "pppd_project::presentation::home.dart::_AppState" {
+  -String? _login
+  -String? _password
+  -GlobalKey<FormState> _formKey
+  -bool _validatation
+  -bool _isObscure
+  +List<UserData> usersList
+  +void initState()
+  +Future<dynamic> getUsers()
+  +Future<bool> checkConnection()
+  +dynamic authorization()
+  +Widget build()
+}
+
+"pppd_project::presentation::home.dart::_AppState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "pppd_project::presentation::home.dart::_AppState"
+
+class "pppd_project::presentation::make_an_appointment.dart::MakeAnAppointment" {
+  +State<MakeAnAppointment> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "pppd_project::presentation::make_an_appointment.dart::MakeAnAppointment"
+
+class "pppd_project::presentation::make_an_appointment.dart::_MakeAnAppointmentState" {
+  +List<String> specialityList
+  +String? dropdownSpeciality
+  +List<String> budgetTypeList
+  +String? dropdownBudgetType
+  -bool _isDocotorsLoading
+  -bool _isButtonClicked
+  +List<AppealData> appeals
+  +List<MedicalSpecialityData> doctorsInfo
+  +List<MedicalSpecialityData> selectedDoctorsInfo
+  +List<ScheduleData> schedules
+  +List<ScheduleData> selectedSchedules
+  +List<List<ScheduleData>> scheduleMatrix
+  -int _whenPostAppeal
+  +int selectedIndex
+  +int selectedTimeIndex
+  +List<int> selectedDateAndTime
+  +List<DateFirstAppealData> datesFirstRendereds
+  +List<PatientData> patients
+  +void initState()
+  +Future<dynamic> getDoctorsAndSchedules()
+  +Future<dynamic> postAppeal()
+  +Future<dynamic> postDate()
+  +dynamic createAppeal()
+  +Future<dynamic> filterDocotors()
+  +dynamic filterSchedules()
+  +Future<bool> checkData()
+  +Future<bool> checkAppeal()
+  +Future<bool> checkOtherAppeal()
+  +dynamic message()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "pppd_project::presentation::make_an_appointment.dart::_MakeAnAppointmentState"
+
+class "pppd_project::presentation::patient_appeal_info.dart::PatientAppealInfo" {
+  +AppealData appealInfo
+  +State<PatientAppealInfo> createState()
+}
+
+"pppd_project::presentation::patient_appeal_info.dart::PatientAppealInfo" o-- "pppd_project::models::appeals_data.dart::AppealData"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "pppd_project::presentation::patient_appeal_info.dart::PatientAppealInfo"
+
+class "pppd_project::presentation::patient_appeal_info.dart::_PatientAppealInfoState" {
+  +List<ProvidedAssistanceData> listProvidedAssistance
+  +List<ServiceData> listService
+  +String? services
+  +void initState()
+  +Future<dynamic> getServices()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "pppd_project::presentation::patient_appeal_info.dart::_PatientAppealInfoState"
+
+class "pppd_project::presentation::patient_personal_area.dart::PersonalAreaPatient" {
+  +bool patientAndDoctor
+  +AppealData appealPatient
+  +State<PersonalAreaPatient> createState()
+}
+
+"pppd_project::presentation::patient_personal_area.dart::PersonalAreaPatient" o-- "pppd_project::models::appeals_data.dart::AppealData"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "pppd_project::presentation::patient_personal_area.dart::PersonalAreaPatient"
+
+class "pppd_project::presentation::patient_personal_area.dart::_PersonalAreaPatientState" {
+  +int selectedItem
+  +bool patientAndDoctor
+  +String floatingButtonText
+  +List<AppealData> appeals
+  +List<AppealData> appealsPatient
+  -bool _isLoading
+  +List<String> filter
+  +String? dropdownValue
+  +void initState()
+  +Future<dynamic> getAppeals()
+  +Future<dynamic> filterToDoctorAppeal()
+  +Future<dynamic> filterAppeal()
+  +dynamic message()
+  +Future<dynamic> deleteAppeal()
+  +void showDialog()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "pppd_project::presentation::patient_personal_area.dart::_PersonalAreaPatientState"
+
+class "pppd_project::presentation::registration.dart::Registration" {
+  +State<Registration> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "pppd_project::presentation::registration.dart::Registration"
+
+class "pppd_project::presentation::registration.dart::_RegistrationState" {
+  -String? _name
+  -String? _surname
+  -String? _patronymic
+  -String? _oms
+  -String? _snils
+  -String? _email
+  -String? _login
+  -String? _password
+  -bool _succes
+  -bool _isAccountCreating
+  -GlobalKey<FormState> _formKey
+  -bool _validatation
+  +List<String> genderList
+  +String? dropdownValue
+  +DateTime selectedDate
+  +List<MedicalCardData> listMedicalCards
+  +List<UserData> listUsers
+  +int yearNow
+  -bool _isObscure
+  -Future<void> _selectDate()
+  +Future<dynamic> CreateAccountPatient()
+  +dynamic message()
+  +Widget build()
+}
+
+"pppd_project::presentation::registration.dart::_RegistrationState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "pppd_project::presentation::registration.dart::_RegistrationState"
+"flutter::src::widgets::ticker_provider.dart::TickerProviderStateMixin" <|-- "pppd_project::presentation::registration.dart::_RegistrationState"
+
+class "pppd_project::presentation::selected_appeal.dart::SelectedAppeal" {
+  +AppealData appealPatient
+  +State<SelectedAppeal> createState()
+}
+
+"pppd_project::presentation::selected_appeal.dart::SelectedAppeal" o-- "pppd_project::models::appeals_data.dart::AppealData"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "pppd_project::presentation::selected_appeal.dart::SelectedAppeal"
+
+class "pppd_project::presentation::selected_appeal.dart::_SelectedAppealState" {
+  -String? _complaints
+  -String? _inspection
+  -String? _diagnosis
+  -String? _recommendations
+  -GlobalKey<FormState> _formKey
+  -bool _validatation
+  -String? _code
+  +List<String> servicesList
+  +List<String> servicesAddedList
+  +String? dropdownValue
+  +List<ProvidedAssistanceData> listAssisnaces
+  +List<TypeOfMedicalCareData> listCares
+  +List<TypeOfMedicalCareData> listServicesRendered
+  -bool _isObscure
+  -bool _isServicesLoading
+  +void initState()
+  +Future<dynamic> getAssistancesAndServices()
+  +Future<dynamic> setAppealDataAndAsisstances()
+  +dynamic message()
+  +Widget build()
+}
+
+"pppd_project::presentation::selected_appeal.dart::_SelectedAppealState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "pppd_project::presentation::selected_appeal.dart::_SelectedAppealState"
+"flutter::src::widgets::ticker_provider.dart::TickerProviderStateMixin" <|-- "pppd_project::presentation::selected_appeal.dart::_SelectedAppealState"
+
+class "pppd_project::presentation::settings.dart::Settings" {
+  +State<Settings> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "pppd_project::presentation::settings.dart::Settings"
+
+class "pppd_project::presentation::settings.dart::_SettingsState" {
+  -bool _switchValue
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "pppd_project::presentation::settings.dart::_SettingsState"
+
+class "pppd_project::presentation::support.dart::Support" {
+  +State<Support> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "pppd_project::presentation::support.dart::Support"
+
+class "pppd_project::presentation::support.dart::_SupportState" {
+  -GlobalKey<FormState> _formKey
+  -bool _validatation
+  -String? _message
+  +List<String> filter
+  +String? dropdownValue
+  -dynamic _sendingMails()
+  +dynamic message()
+  +Widget build()
+}
+
+"pppd_project::presentation::support.dart::_SupportState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "pppd_project::presentation::support.dart::_SupportState"
+
+
+@enduml
