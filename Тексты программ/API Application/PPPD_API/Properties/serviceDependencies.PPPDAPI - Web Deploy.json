@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/fleeeeex/databases/PPPDDB",
+      "type": "mssql.azure",
+      "connectionId": "Connection",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
